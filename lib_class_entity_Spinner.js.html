@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>lib/class/Trigger.js - Documentation</title>
+    <title>lib/class/entity/Spinner.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">lib/class/Trigger.js</h1>
+    <h1 class="page-title">lib/class/entity/Spinner.js</h1>
     
 
     
@@ -42,67 +42,28 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const blacklistedEntityAttrs = [ 'nodes' ];
+            <pre class="prettyprint source linenums"><code>const Entity = require('../Entity');
 
-class Trigger {
-	/**
-	 * Creates a Trigger instance
-	 * @constructor
-	 * @param {String} name - The name of the Trigger
-	 * @param {Object} data - An Object containing the attributes and child nodes to define this trigger
-	 * @param {Number} id - The id of the trigger
-	 * @example
-	 * // returns a Trigger
-	 * const { Trigger } = require('lucid-dream');
-	 * const trigger = new Trigger('my_trigger', {}, 1234);
-	 * @property {String} name - The name of the trigger
-	 * @property {Object} data - An Object containing the attributes and child nodes of this trigger
-	 * @property {Number} id - The id of the trigger
-	 */
-	constructor(name, data, id) {
-		this.name = name;
-		this.data = data;
-		this.id = id;
-	}
-
-	/**
-	 * Encode a trigger into a dictionary
-	 * @example
-	 * // returns encoded trigger dictionary
-	 * const { Trigger } = require('lucid-dream');
-	 * const trigger = new Trigger('foo', {}, 2222);
-	 * trigger.toDict();
-	 * @returns {Object} An object containing the encoded trigger dicitonary
-	 */
-	toDict() {
-		const { data } = this;
-		const res = {};
-		res.__name = this.name;
-		res.id = this.id;
-
-		for (let [ key, value ] of Object.entries(data)) {
-			if (!blacklistedEntityAttrs.includes(key)) {
-				res[key] = value;
-			}
-		}
-
-		if (data.nodes &amp;&amp; data.nodes.length) {
-			res.__children = [];
-
-			for (let node of data.nodes) {
-				res.__children.push({
-					__name: 'node',
-					x: node[0],
-					y: node[1]
-				});
-			}
-		}
-
-		return res;
+/**
+ * Create a spinner
+ * @constructor
+ * @param {object} [data={}] - An object containing the attributes to apply to the spinner
+ * @example
+ * // create a spinner
+ * const { Entity } = require('lucid-dream');
+ * const spinner = new Entity.Spinner({ x: 100, y: 100 });
+ * @property {Number} x - The x position of the spinner
+ * @property {Number} y - The y position of the spinner
+ * @property {Boolean} [attachToSolid=false] - Does this spinner attach to solids
+ * @property {String} [color='Blue'] - The color of the spinner. valid values are `Blue`, `Red`, `Purple`, and `Rainbow`
+ */
+class Spinner extends Entity {
+	constructor(data = {}) {
+		super('spinner', data);
 	}
 }
 
-module.exports = Trigger;</code></pre>
+module.exports = Spinner;</code></pre>
         </article>
     </section>
 

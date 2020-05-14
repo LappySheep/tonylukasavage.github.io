@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>lib/class/Trigger.js - Documentation</title>
+    <title>lucid-dream.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">lib/class/Trigger.js</h1>
+    <h1 class="page-title">lucid-dream.js</h1>
     
 
     
@@ -42,67 +42,38 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const blacklistedEntityAttrs = [ 'nodes' ];
+            <pre class="prettyprint source linenums"><code>const config = require('./config/lucid-dream.json');
+const classes = require('./lib/class');
 
-class Trigger {
+class Lucid {
 	/**
-	 * Creates a Trigger instance
+	 * Create an instance of Lucid. This is not usually invoked directly as an instance is provided automatically when calling `require('lucid-dream')`.
 	 * @constructor
-	 * @param {String} name - The name of the Trigger
-	 * @param {Object} data - An Object containing the attributes and child nodes to define this trigger
-	 * @param {Number} id - The id of the trigger
-	 * @example
-	 * // returns a Trigger
-	 * const { Trigger } = require('lucid-dream');
-	 * const trigger = new Trigger('my_trigger', {}, 1234);
-	 * @property {String} name - The name of the trigger
-	 * @property {Object} data - An Object containing the attributes and child nodes of this trigger
-	 * @property {Number} id - The id of the trigger
+	 * @property {Object} config - The Lucid configuration object
+	 * @property {Apply} Apply - The Apply class
+	 * @property {Chapter} Chapter - The Chapter class
+	 * @property {Decal} Decal - The Decal class
+	 * @property {Dialog} Dialog - The Dialog class
+	 * @property {Effect} Effect - The Effect class
+	 * @property {Entity} Entity - The Entity class
+	 * @property {Filler} Filler - The Filler class
+	 * @property {Map} Map - The Map class
+	 * @property {Mod} Mod - The Mod class
+	 * @property {ObjectTiles} ObjectTiles - The ObjectTiles class
+	 * @property {Parallax} Parallax - The Parallax class
+	 * @property {Room} Room - The Room class
+	 * @property {Side} Side - The Side class
+	 * @property {Style} Style - The Style class
+	 * @property {Tiles} Tiles - The Tiles class
+	 * @property {Trigger} Trigger - The Trigger class
 	 */
-	constructor(name, data, id) {
-		this.name = name;
-		this.data = data;
-		this.id = id;
-	}
-
-	/**
-	 * Encode a trigger into a dictionary
-	 * @example
-	 * // returns encoded trigger dictionary
-	 * const { Trigger } = require('lucid-dream');
-	 * const trigger = new Trigger('foo', {}, 2222);
-	 * trigger.toDict();
-	 * @returns {Object} An object containing the encoded trigger dicitonary
-	 */
-	toDict() {
-		const { data } = this;
-		const res = {};
-		res.__name = this.name;
-		res.id = this.id;
-
-		for (let [ key, value ] of Object.entries(data)) {
-			if (!blacklistedEntityAttrs.includes(key)) {
-				res[key] = value;
-			}
-		}
-
-		if (data.nodes &amp;&amp; data.nodes.length) {
-			res.__children = [];
-
-			for (let node of data.nodes) {
-				res.__children.push({
-					__name: 'node',
-					x: node[0],
-					y: node[1]
-				});
-			}
-		}
-
-		return res;
+	constructor() {
+		Object.assign(this, classes, { config });
 	}
 }
 
-module.exports = Trigger;</code></pre>
+module.exports = new Lucid();
+</code></pre>
         </article>
     </section>
 
